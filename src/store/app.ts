@@ -4,6 +4,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 const SERVICE_PORT = import.meta.env.VITE_SERVICE_PORT;
+const isProd = import.meta.env.PROD;
 
 interface RootState {
   currentTab: ITab;
@@ -13,7 +14,9 @@ interface RootState {
   totalReceipts: number;
 }
 
-const baseUrl = `http://localhost:${SERVICE_PORT}/api`;
+const baseUrl = `http://${
+  isProd ? "185.104.249.100" : "localhost"
+}:${SERVICE_PORT}/api`;
 
 export const useAppStore = defineStore("app", {
   state: () =>
