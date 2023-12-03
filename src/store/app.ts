@@ -1,4 +1,4 @@
-import { ITab } from "@/components/UI/Tabs/TabsBase.types";
+import { ITab } from "@/components/UI/Tabs/types";
 import { ICard } from "@/components/ReceiptList/types";
 import { defineStore } from "pinia";
 import axios from "axios";
@@ -36,7 +36,7 @@ export const useAppStore = defineStore("app", {
     async findProducts(product: string): Promise<string[]> {
       return new Promise((res, rej) => {
         axios
-          .get(baseUrl + "/compositions", {
+          .get(baseUrl + "/products", {
             params: {
               search: product,
             },
@@ -54,6 +54,7 @@ export const useAppStore = defineStore("app", {
           .get(baseUrl + `/receipts/${category}`, {
             params: {
               compositions: this.selectedProducts,
+              mode: "strict",
             },
           })
           .then((result) => {

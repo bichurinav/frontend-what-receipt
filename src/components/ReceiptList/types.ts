@@ -3,6 +3,7 @@ export interface ICard {
   compositions?: string[];
   cooktime: string;
   image: string;
-  macthes?: number;
+  macthedCount: number;
+  matchedProducts: string[];
   link: string;
 }

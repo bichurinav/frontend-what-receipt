@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TabsBase from "@/components/UI/Tabs/TabsBase.vue";
 import { TabsName } from "@/constants";
-import { ITab } from "@/components/UI/Tabs/TabsBase.types";
+import { ITab } from "@/components/UI/Tabs/types";
 // import { watch, ref } from "vue";
 
 import { useAppStore } from "@/store/app";

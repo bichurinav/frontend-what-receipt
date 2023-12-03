@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ITab } from "./TabsBase.types";
+import { ITab } from "./types";
 
 interface Props {
   tabs: ITab[];

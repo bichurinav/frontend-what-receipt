@@ -42,14 +42,7 @@ watchEffect(() => {
     </h5>
     <v-virtual-scroll :height="605" :items="receiptList">
       <template v-slot:default="{ item }">
-        <ReceiptCard
-          class="mb-2"
-          :title="item.title"
-          :cooktime="item.cooktime"
-          :image="item.image"
-          :link="item.link"
-          :compositions="item.compositions"
-        />
+        <ReceiptCard class="mb-2" :data="item" />
       </template>
     </v-virtual-scroll>
   </div>

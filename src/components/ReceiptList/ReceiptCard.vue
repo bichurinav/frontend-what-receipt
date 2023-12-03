@@ -1,41 +1,34 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { ICard } from "./types";
-import { useAppStore } from "@/store/app";
 
-const props = defineProps<ICard>();
-
-const store = useAppStore();
+const props = defineProps<{ data: ICard }>();
 
 const expand = ref<boolean>(false);
 
-const selectedProducts = computed(
-  (): string[] => store.$state.selectedProducts
-);
-
-const isExistInProducts = (currentProduct: string) => {
-  let isExist = false;
-
-  selectedProducts.value.forEach((el) => {
-    if (isExist) return;
-    const product = [...el].slice(0, -1).join("");
-    isExist = new RegExp(product, "gi").test(currentProduct);
-  });
-
-  return isExist;
+const isExistInProducts = (
+  matchedProducts: string[],
+  currentProduct: string
+) => {
+  return matchedProducts.includes(currentProduct);
 };
 </script>
 
 <template>
   <v-card class="receipt-card mx-auto">
-    <v-img class="align-end text-white" height="200" :src="props.image" cover>
+    <v-img
+      class="align-end text-white"
+      height="200"
+      :src="props.data.image"
+      cover
+    >
       <v-card-title class="receipt-card__title text-subtitle-2 text-sm-h6">{{
-        props.title
+        props.data.title
       }}</v-card-title>
     </v-img>
 
     <v-card-subtitle class="pt-4">
-      Время готовки: {{ props.cooktime }}
+      Время готовки: {{ props.data.cooktime }}
     </v-card-subtitle>
 
     <v-expand-transition>
@@ -43,13 +36,13 @@ const isExistInProducts = (currentProduct: string) => {
         <v-list class="bg-transparent" density="compact">
           <v-list-item
             class="pa-0 ma-0"
-            v-for="(item, idx) in props.compositions"
+            v-for="(item, idx) in props.data.compositions"
             :key="item + idx"
             :title="item"
           >
             <template #prepend>
               <v-icon
-                v-if="isExistInProducts(item)"
+                v-if="isExistInProducts(props.data.matchedProducts, item)"
                 icon="mdi-check"
                 color="success"
               />
@@ -62,7 +55,7 @@ const isExistInProducts = (currentProduct: string) => {
 
     <v-card-actions class="mt-2">
       <v-btn
-        :href="$props.link"
+        :href="props.data.link"
         target="_blan"
         rel="nofollow"
         color="secondary"
