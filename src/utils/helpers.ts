@@ -7,3 +7,10 @@ export function debounce(func: Function, timeout: number = 300): Function {
     }, timeout);
   };
 }
+
+export function decodeToBase64(str: string): string {
+  if (!str || typeof str !== "string") {
+    throw new Error("Вставьте строку!");
+  }
+  return btoa(unescape(encodeURIComponent(str)));
+}

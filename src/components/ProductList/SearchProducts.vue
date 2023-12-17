@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, onUnmounted } from "vue";
 import { useAppStore } from "../../store/app";
-import { debounce } from "../../utils/helpers";
+import { debounce, decodeToBase64 } from "../../utils/helpers";
 
 const store = useAppStore();
 
@@ -15,7 +15,9 @@ const searchCompositionsAsync = debounce((value: string | null) => {
     return;
   }
   isLoading.value = true;
-  store.findProducts(value as string).finally(() => (isLoading.value = false));
+  store
+    .findProducts(decodeToBase64(value) as string)
+    .finally(() => (isLoading.value = false));
 });
 
 onUnmounted(() => {

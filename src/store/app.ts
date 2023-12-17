@@ -1,6 +1,7 @@
 import { ITab } from "@/components/UI/Tabs/types";
 import { ICard } from "@/components/ReceiptList/types";
 import { defineStore } from "pinia";
+import { decodeToBase64 } from "@/utils/helpers";
 import axios from "axios";
 
 const SERVICE_PORT = import.meta.env.VITE_SERVICE_PORT;
@@ -49,11 +50,12 @@ export const useAppStore = defineStore("app", {
       });
     },
     async getReceipts(category: string): Promise<ICard[]> {
+      const products = this.selectedProducts.map((el) => decodeToBase64(el));
       return new Promise((res, rej) => {
         axios
           .get(baseUrl + `/receipts/${category}`, {
             params: {
-              compositions: this.selectedProducts,
+              compositions: products,
               mode: "strict",
             },
           })
